@@ -16,6 +16,20 @@ Shop Page → 1Fi Marketplace Tab → Product Catalog → Product Detail & Image
 
 ---
 
+## 📸 App Screenshots & UI Experience
+
+| 1Fi Marketplace Catalog | Product Details & No-Cost EMI |
+| :---: | :---: |
+| <img src="docs/screenshots/marketplace-catalog.png" width="320" alt="1Fi Marketplace Catalog" /> | <img src="docs/screenshots/product-detail-emi.png" width="320" alt="Product Details & EMI Plan Selector" /> |
+| **Search, Category Chips & Catalog Grid** | **Dynamic Variants & 0% EMI Tenure Plan Selector** |
+
+| 1Fi LAMF Eligibility Modal | Shop 3-Tab Architecture |
+| :---: | :---: |
+| <img src="docs/screenshots/eligibility-collateral-modal.png" width="320" alt="1Fi Mutual Fund Eligibility Modal" /> | <img src="docs/screenshots/shop-tab-navigation.png" width="320" alt="Shop 3-Tab Navigation" /> |
+| **Mutual Fund Collateral Check & Instant Approval** | **Top Brands & Nearby Stores Segmented Tabs** |
+
+---
+
 ## 🎯 What Was Built
 
 ### 1. Shop Page Navigation & Segmented Tabs

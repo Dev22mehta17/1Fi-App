@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { Sparkles, ArrowUpDown, AlertCircle, RefreshCw } from 'lucide-react';
-import { Product } from '@/types/marketplace';
+import { Product, ProductCategory } from '@/types/marketplace';
+import { MOCK_PRODUCTS } from '@/data/products';
 import { useProducts } from '@/hooks/useProducts';
 import SearchBar from './SearchBar';
 import CategoryFilter from './CategoryFilter';
@@ -11,7 +12,17 @@ import ProductSkeleton from './ProductSkeleton';
 import ProductDetailView from './ProductDetailView';
 import EligibilityModal from './EligibilityModal';
 
-export default function MarketplaceView() {
+interface MarketplaceViewProps {
+  initialProductId?: string;
+  initialModal?: string;
+  initialCategory?: ProductCategory;
+}
+
+export default function MarketplaceView({
+  initialProductId,
+  initialModal,
+  initialCategory = 'all',
+}: MarketplaceViewProps = {}) {
   const {
     products,
     loading,
@@ -23,9 +34,33 @@ export default function MarketplaceView() {
     sortBy,
     setSortBy,
     refetch,
-  } = useProducts();
+  } = useProducts(initialCategory);
 
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const initialSelected = initialProductId
+    ? MOCK_PRODUCTS.find((p) => p.id === initialProductId) || null
+    : null;
+
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(initialSelected);
+
+  const initialEligibility =
+    initialModal === 'eligibility' && initialSelected
+      ? {
+          product: initialSelected,
+          variantId: initialSelected.variants[0].id,
+          variantName: initialSelected.variants[0].variantName,
+          price: initialSelected.variants[0].sellingPrice,
+          tenure: initialSelected.availableEmiTenures.includes(12)
+            ? 12
+            : initialSelected.availableEmiTenures[0] || 6,
+          monthlyEmi: Math.round(
+            initialSelected.variants[0].sellingPrice /
+              (initialSelected.availableEmiTenures.includes(12)
+                ? 12
+                : initialSelected.availableEmiTenures[0] || 6)
+          ),
+        }
+      : null;
+
   const [eligibilityDetails, setEligibilityDetails] = useState<{
     product: Product;
     variantId: string;
@@ -33,7 +68,7 @@ export default function MarketplaceView() {
     price: number;
     tenure: number;
     monthlyEmi: number;
-  } | null>(null);
+  } | null>(initialEligibility);
 
   // If a product is selected, render ProductDetailView
   if (selectedProduct) {
